@@ -85,11 +85,31 @@ data aws_iam_policy_document caascad_provisioner_policy {
       "iam:ListAttachedRolePolicies",
     ]
     resources = [
-      aws_iam_role.eks_cluster_role.arn,
-      aws_iam_role.eks_node_group_role.arn,
-      // Allow to check for SLR AWSServiceRoleForAmazonEKSNodegroup
-      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/*",
+      "*",
+      # FIXME: this should work
+      # aws_iam_role.eks_cluster_role.arn,
+      # aws_iam_role.eks_node_group_role.arn,
+      # // Allow to check for SLR AWSServiceRoleForAmazonEKSNodegroup
+      # "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/*",
     ]
+  }
+
+  // Allow to create SLR for node group
+  statement {
+    actions = [
+      "iam:CreateServiceLinkedRole",
+    ]
+    resources = [
+      "*",
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "iam:AWSServiceName"
+      values = [
+        "eks.amazonaws.com",
+        "eks-nodegroup.amazonaws.com",
+      ]
+    }
   }
 
   statement {
