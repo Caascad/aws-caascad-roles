@@ -242,6 +242,8 @@ resource aws_iam_role caascad_provisioner {
 
   force_detach_policies = true
 
+  max_session_duration = 10 * 60 * 60 // 10h
+
   assume_role_policy = data.aws_iam_policy_document.caascad_provisioner_assumerole_policy.json
 
   tags = {
