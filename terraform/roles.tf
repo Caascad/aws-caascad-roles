@@ -65,18 +65,18 @@ resource aws_iam_role_policy_attachment ec2_container_registry_ro {
   role       = aws_iam_role.eks_node_group_role.name
 }
 
-data aws_iam_policy_document caascad_provisioner_assumerole_policy {
+data aws_iam_policy_document caascad_operator_assumerole_policy {
   statement {
     actions = ["sts:AssumeRole"]
 
     principals {
       type        = "AWS"
-      identifiers = [var.caascad_provisioner_user_arn]
+      identifiers = [var.caascad_operator_user_arn]
     }
   }
 }
 
-data aws_iam_policy_document caascad_provisioner_policy {
+data aws_iam_policy_document caascad_operator_policy {
 
   // Needed to start EKS cluster
   statement {
@@ -229,22 +229,22 @@ data aws_iam_policy_document caascad_provisioner_policy {
 
 }
 
-resource aws_iam_policy caascad_provisioner_policy {
-  name = "caascad_provisioner"
+resource aws_iam_policy caascad_operator_policy {
+  name = "caascad_operator"
   path = "/"
 
-  policy = data.aws_iam_policy_document.caascad_provisioner_policy.json
+  policy = data.aws_iam_policy_document.caascad_operator_policy.json
 }
 
-resource aws_iam_role caascad_provisioner {
-  name        = "caascad_provisioner"
+resource aws_iam_role caascad_operator {
+  name        = "caascad-operator"
   description = "Role used for Caascad provisioning and lifecycle"
 
   force_detach_policies = true
 
   max_session_duration = 10 * 60 * 60 // 10h
 
-  assume_role_policy = data.aws_iam_policy_document.caascad_provisioner_assumerole_policy.json
+  assume_role_policy = data.aws_iam_policy_document.caascad_operator_assumerole_policy.json
 
   tags = {
     caascad       = "true"
@@ -253,12 +253,12 @@ resource aws_iam_role caascad_provisioner {
 
 }
 
-resource aws_iam_role_policy_attachment caascad_provisioner {
-  role       = aws_iam_role.caascad_provisioner.name
-  policy_arn = aws_iam_policy.caascad_provisioner_policy.arn
+resource aws_iam_role_policy_attachment caascad_operator {
+  role       = aws_iam_role.caascad_operator.name
+  policy_arn = aws_iam_policy.caascad_operator_policy.arn
 }
 
 resource aws_iam_role_policy_attachment ec2_readonly {
-  role       = aws_iam_role.caascad_provisioner.name
+  role       = aws_iam_role.caascad_operator.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
 }

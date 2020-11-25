@@ -4,7 +4,7 @@ variable aws_region {
   description = "AWS Region"
 }
 
-variable caascad_provisioner_user_arn {
+variable caascad_operator_user_arn {
   type        = string
-  description = "User ARN that is allowed to assume the `caascad_provisioner` role."
+  description = "User ARN that is allowed to assume the `caascad-operator` role."
 }
