@@ -1,7 +1,7 @@
 data aws_caller_identity current {}
 
 resource aws_iam_role eks_cluster_role {
-  name                  = "caascad_eks_cluster_role"
+  name                  = "caascad-eks-cluster-role"
   force_detach_policies = true
 
   assume_role_policy = jsonencode({
@@ -32,7 +32,7 @@ resource aws_iam_role_policy_attachment eks_cluster_slr {
 }
 
 resource aws_iam_role eks_node_group_role {
-  name = "caascad_eks_node_group_role"
+  name = "caascad-eks-node-group-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -71,7 +71,7 @@ data aws_iam_policy_document caascad_operator_assumerole_policy {
 
     principals {
       type        = "AWS"
-      identifiers = [var.caascad_operator_user_arn]
+      identifiers = [var.caascad_operator_trusted_arn]
     }
   }
 }
@@ -130,8 +130,6 @@ data aws_iam_policy_document caascad_operator_policy {
     resources = [
       "arn:aws:eks:*:${data.aws_caller_identity.current.account_id}:cluster/caascad-*",
       "arn:aws:eks:*:${data.aws_caller_identity.current.account_id}:nodegroup/caascad-*",
-      // TODO: remove
-      "arn:aws:eks:*:${data.aws_caller_identity.current.account_id}:nodegroup/eks-caascad-*",
     ]
   }
 

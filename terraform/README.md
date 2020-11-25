@@ -16,7 +16,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | aws\_region | AWS Region | `string` | `"eu-west-3"` | no |
-| caascad\_operator\_user\_arn | User ARN that is allowed to assume the `caascad-operator` role. | `string` | n/a | yes |
+| caascad\_operator\_trusted\_arn | ARN that is allowed to assume the `caascad-operator` role. | `string` | n/a | yes |
 
 ## Outputs
 
