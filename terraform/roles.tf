@@ -188,9 +188,7 @@ data aws_iam_policy_document caascad_operator_policy {
       "ec2:RunInstances",
     ]
     resources = [
-      "arn:aws:ec2:*::image/*",
-      "arn:aws:ec2:*:${data.aws_caller_identity.current.account_id}:network-interface/*",
-      "arn:aws:ec2:*:${data.aws_caller_identity.current.account_id}:volume/*",
+      "*"
     ]
   }
 
