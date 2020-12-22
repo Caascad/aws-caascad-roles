@@ -191,10 +191,12 @@ data aws_iam_policy_document caascad_operator_policy {
     ]
   }
 
-  // Authorize creation if the resource contains the caascad-managed tag
+  // Authorize creation of EC2|Autoscaling|Cloudwatch resources if they have the caascad-managed tag
   statement {
     actions = [
       "ec2:*",
+      "autoscaling:*",
+      "cloudwatch:*"
     ]
     resources = [
       "*"
@@ -233,10 +235,12 @@ data aws_iam_policy_document caascad_operator_policy {
     }
   }
 
-  // Authorize actions on EC2 resources only if the tag caascad-managed is set
+  // Authorize actions on EC2|Autoscaling|Cloudwatch resources only if the tag caascad-managed is set
   statement {
     actions = [
-      "ec2:*"
+      "ec2:*",
+      "autoscaling:*",
+      "cloudwatch:*"
     ]
     resources = [
       "*"
@@ -247,7 +251,6 @@ data aws_iam_policy_document caascad_operator_policy {
       values   = ["true"]
     }
   }
-
 }
 
 resource aws_iam_policy caascad_operator_policy {
