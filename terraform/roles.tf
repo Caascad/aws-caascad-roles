@@ -248,6 +248,15 @@ data aws_iam_policy_document caascad_operator_policy {
     }
   }
 
+  // Authorize actions on Cloudwatch resources only if the tag caascad-managed is set
+  statement {
+    actions = [
+      "lambda:*"
+    ]
+    resources = [
+      "*"
+    ]
+  }
 }
 
 resource aws_iam_policy caascad_operator_policy {
