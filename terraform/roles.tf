@@ -185,6 +185,8 @@ data aws_iam_policy_document caascad_operator_policy {
       "ec2:DetachNetworkInterface",
       // debug unauthorized sts calls
       "sts:DecodeAuthorizationMessage",
+      // authorize creating requests in AWS support
+      "support:*",
     ]
     resources = [
       "*"
