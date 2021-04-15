@@ -288,3 +288,51 @@ resource aws_iam_role_policy_attachment ec2_readonly {
   role       = aws_iam_role.caascad_operator.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
 }
+
+resource aws_iam_role lambda_promtail {
+  name = "caascad-lambda-promtail-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      }
+    }]
+  })
+
+  tags = {
+    caascad = "true"
+  }
+}
+
+data aws_iam_policy_document log_group_write {
+  statement {
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+    ]
+    resources = [
+      "arn:aws:logs:*:*:*",
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:ResourceTag/caascad-managed"
+      values   = ["true"]
+    }
+  }
+}
+
+resource aws_iam_policy log_group_write {
+  name = "caascad-log-group-write-policy"
+  path = "/"
+
+  policy = data.aws_iam_policy_document.log_group_write.json
+}
+
+resource aws_iam_role_policy_attachment lambda_promtail_log_group_write {
+  role       = aws_iam_role.lambda_promtail.name
+  policy_arn = aws_iam_policy.log_group_write.arn
+}
