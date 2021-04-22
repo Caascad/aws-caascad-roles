@@ -288,3 +288,58 @@ resource aws_iam_role_policy_attachment ec2_readonly {
   role       = aws_iam_role.caascad_operator.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
 }
+
+data aws_iam_policy_document caascad_monitoring_cloud_services_assumerole_policy {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "AWS"
+      identifiers = [var.caascad_operator_trusted_arn]
+    }
+  }
+}
+
+data aws_iam_policy_document caascad_cloudwatch_metrics_readonly_policy {
+  statement {
+    actions = [
+      "tag:GetResources",
+      "cloudwatch:ListTagsForResource",
+      "cloudwatch:GetMetricStatistics",
+      "cloudwatch:GetMetricData",
+      "cloudwatch:ListMetrics"
+    ]
+    resources = [
+      "*"
+    ]
+  }
+}
+
+resource aws_iam_policy caascad_cloudwatch_metrics_readonly_policy {
+  name = "caascad-cloudwatch-metrics-readonly"
+  path = "/"
+
+  policy = data.aws_iam_policy_document.caascad_cloudwatch_metrics_readonly_policy.json
+}
+
+resource aws_iam_role caascad_monitoring_cloud_services {
+  name        = "caascad-monitoring-cloud-services"
+  description = "Role used for Caascad monitoring of cloud services"
+
+  force_detach_policies = true
+
+  max_session_duration = 10 * 60 * 60 // 10 hours
+
+  assume_role_policy = data.aws_iam_policy_document.caascad_monitoring_cloud_services_assumerole_policy.json
+
+  tags = {
+    caascad = "true"
+    vault-allowed = "true"
+  }
+
+}
+
+resource aws_iam_role_policy_attachment caascad_monitoring_cloud_services {
+  role       = aws_iam_role.caascad_monitoring_cloud_services.name
+  policy_arn = aws_iam_policy.caascad_cloudwatch_metrics_readonly_policy.arn
+}
