@@ -49,7 +49,7 @@ resource aws_iam_role_policy_attachment ec2_readonly {
 ////////////////// Caascad Operator (create cluster and network) policy //////////////
 
 resource aws_iam_policy caascad_operator_create_cluster_policy {
-  count = var.existing_cluster ? 0:1
+  count = var.existing_cluster ? 0 : 1
 
   name = "caascad_operator_create_cluster"
   path = "/"
@@ -58,7 +58,7 @@ resource aws_iam_policy caascad_operator_create_cluster_policy {
 }
 
 resource aws_iam_role_policy_attachment caascad_operator_create_cluster_policy {
-  count = var.existing_cluster ? 0:1
+  count = var.existing_cluster ? 0 : 1
 
   role       = aws_iam_role.caascad_operator.name
   policy_arn = aws_iam_policy.caascad_operator_create_cluster_policy[count.index].arn
@@ -66,7 +66,7 @@ resource aws_iam_role_policy_attachment caascad_operator_create_cluster_policy {
 
 ////////////////// Caascad Operator (existing cluster and network) policy //////////////
 resource aws_iam_policy caascad_operator_existing_eks_policy {
-  count = var.existing_cluster ? 1:0
+  count = var.existing_cluster ? 1 : 0
 
   name = "caascad_operator_existing_eks"
   path = "/"
@@ -75,7 +75,7 @@ resource aws_iam_policy caascad_operator_existing_eks_policy {
 }
 
 resource aws_iam_role_policy_attachment caascad_operator_existing_eks_policy {
-  count = var.existing_cluster ? 1:0
+  count = var.existing_cluster ? 1 : 0
 
   role       = aws_iam_role.caascad_operator.name
   policy_arn = aws_iam_policy.caascad_operator_existing_eks_policy[count.index].arn

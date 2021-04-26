@@ -142,7 +142,7 @@ data aws_iam_policy_document caascad_operator_base_policy {
 }
 
 data aws_iam_policy_document caascad_operator_create_cluster_policy {
- // Authorize EKS actions on caascad clusters and node groups
+  // Authorize EKS actions on caascad clusters and node groups
   statement {
     actions = [
       "eks:*",
@@ -162,7 +162,7 @@ data aws_iam_policy_document caascad_operator_existing_eks_policy {
       "eks:CreateNodeGroup",
     ]
     resources = [
-       "*"
+      "*"
     ]
     condition {
       test     = "StringEquals"
@@ -181,7 +181,7 @@ data aws_iam_policy_document caascad_operator_existing_eks_policy {
       "eks:UnTagResource",
     ]
     resources = [
-       "*"
+      "*"
     ]
     condition {
       test     = "StringEquals"
