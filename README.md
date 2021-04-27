@@ -106,7 +106,8 @@ By default `terraform` will look at `$HOME/.aws/credentials` or
 
 This `terraform` configuration needs only one `input`:
 
-* `caascad_operator_trusted_arn`: some IAM ARN will be be provided to you by Caascad
+* `caascad_operator_trusted_arn`: some IAM ARN will be be provided to you by Caascad.
+* `existing_cluster`: indicate if the EKS cluster is already existing and will not be managed by Caascad (default is `false`). In this case, you will need to add a tag named `caascad_allowed` with value `true` to the VPC and the EKS cluster.
 
 Once you have received the ARN from the Caascad team create a file named `terraform.tfvars`
 in the `./terraform` directory with the following content:
