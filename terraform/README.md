@@ -17,7 +17,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | caascad\_operator\_trusted\_arn | ARN that is allowed to assume the `caascad-operator` role. | `string` | n/a | yes |
-| existing\_cluster | Indicate if the EKS cluster and so the required network (VPC, subnets, ...) is already existing. | `bool` | `false` | no |
+| existing\_cluster | Indicate if the EKS cluster is already existing. | `bool` | `false` | no |
 
 ## Outputs
 
