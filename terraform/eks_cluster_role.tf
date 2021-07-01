@@ -1,4 +1,4 @@
-resource aws_iam_role eks_cluster_role {
+resource "aws_iam_role" "eks_cluster_role" {
   name                  = "caascad-eks-cluster-role"
   force_detach_policies = true
 
@@ -20,7 +20,7 @@ resource aws_iam_role eks_cluster_role {
 }
 
 // https://medium.com/faun/aws-eks-the-role-is-not-authorized-to-perform-ec2-describeaccountattributes-error-1c6474781b84
-data aws_iam_policy_document eks_cluster_role_custom {
+data "aws_iam_policy_document" "eks_cluster_role_custom" {
   statement {
     actions = [
       "ec2:DescribeAccountAttributes",
@@ -32,24 +32,24 @@ data aws_iam_policy_document eks_cluster_role_custom {
   }
 }
 
-resource aws_iam_policy eks_cluster_role_custom {
+resource "aws_iam_policy" "eks_cluster_role_custom" {
   name = "caascad-eks-cluster-policy"
   path = "/"
 
   policy = data.aws_iam_policy_document.eks_cluster_role_custom.json
 }
 
-resource aws_iam_role_policy_attachment eks_cluster {
+resource "aws_iam_role_policy_attachment" "eks_cluster" {
   role       = aws_iam_role.eks_cluster_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
 
-resource aws_iam_role_policy_attachment eks_cluster_slr {
+resource "aws_iam_role_policy_attachment" "eks_cluster_slr" {
   role       = aws_iam_role.eks_cluster_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
 }
 
-resource aws_iam_role_policy_attachment eks_cluster_custom {
+resource "aws_iam_role_policy_attachment" "eks_cluster_custom" {
   role       = aws_iam_role.eks_cluster_role.name
   policy_arn = aws_iam_policy.eks_cluster_role_custom.arn
 }
