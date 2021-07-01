@@ -1,4 +1,4 @@
-data aws_iam_policy_document caascad_operator_base_policy {
+data "aws_iam_policy_document" "caascad_operator_base_policy" {
 
   // Needed to start EKS cluster
   statement {
@@ -141,7 +141,7 @@ data aws_iam_policy_document caascad_operator_base_policy {
   }
 }
 
-data aws_iam_policy_document caascad_operator_create_cluster_policy {
+data "aws_iam_policy_document" "caascad_operator_create_cluster_policy" {
   // Authorize EKS actions on caascad clusters and node groups
   statement {
     actions = [
@@ -155,7 +155,7 @@ data aws_iam_policy_document caascad_operator_create_cluster_policy {
 }
 
 // Case of existing VPC and EKS cluster
-data aws_iam_policy_document caascad_operator_existing_eks_policy {
+data "aws_iam_policy_document" "caascad_operator_existing_eks_policy" {
   // Authorize EKS actions on allowed clusters
   statement {
     actions = [

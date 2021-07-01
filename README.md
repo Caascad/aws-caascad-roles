@@ -14,7 +14,7 @@ your own provisioning.
 
 ### Installing terraform
 
-The code is compatible with `terraform 0.12.X` series. You can find pre-built
+The code is compatible with `terraform 0.12+` series. You can find pre-built
 binaries of `terraform` [here](https://releases.hashicorp.com/terraform/) or you
 can install it using a package manager (depending of your system).
 
