@@ -174,11 +174,8 @@ data "aws_iam_policy_document" "caascad_operator_existing_eks_policy" {
   // Authorize EKS actions on allowed nodegroups/caascad-managed resources
   statement {
     actions = [
-      "eks:DeleteNodeGroup",
-      "eks:UpdateNodegroupConfig",
-      "eks:UpdateNodegroupVersion",
       "eks:TagResource",
-      "eks:UnTagResource",
+      "eks:UntagResource",
     ]
     resources = [
       "*"
@@ -188,6 +185,18 @@ data "aws_iam_policy_document" "caascad_operator_existing_eks_policy" {
       variable = "aws:ResourceTag/caascad-managed"
       values   = ["true"]
     }
+  }
+
+  // Authorize EKS actions on allowed ALL as tag conditions is on partial actions
+  statement {
+    actions = [
+      "eks:DeleteNodeGroup",
+      "eks:UpdateNodegroupConfig",
+      "eks:UpdateNodegroupVersion",
+    ]
+    resources = [
+      "*"
+    ]
   }
 
   // Authorize SecurityGroup creation on allowed VPC. (bastion)
