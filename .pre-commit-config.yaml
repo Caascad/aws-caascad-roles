@@ -9,12 +9,15 @@ repos:
   - id: check-yaml
   - id: check-added-large-files
 - repo: git://github.com/Caascad/pre-commit-terraform
-  rev: v1.30.0
+  rev: v1.50.0
   hooks:
   - id: terraform_fmt
   - id: terraform_docs
   - id: terraform_tflint
     args: [
-    '--args=--enable-rule=terraform_documented_variables
-    --enable-rule=terraform_documented_outputs'
+    '--args=--config=__GIT_WORKING_DIR__/.tflint.hcl'
     ]
+- repo: git://github.com/Caascad/pre-commit-hooks-1
+  rev: 2.2.0
+  hooks:
+  - id: shellcheck
