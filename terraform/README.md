@@ -50,6 +50,10 @@ No modules.
 | [aws_iam_policy_document.caascad_operator_existing_eks_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.eks_cluster_role_custom](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.eks_node_group_role_custom](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy.caascad_administrator_operator_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_role.caascad_administrator_operator](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.caascad_administrator_operator_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_policy_document.caascad_administrator_operator_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
 
@@ -57,6 +61,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_caascad_operator_trusted_arn"></a> [caascad\_operator\_trusted\_arn](#input\_caascad\_operator\_trusted\_arn) | ARN that is allowed to assume the `caascad-operator` role. | `string` | n/a | yes |
 | <a name="input_existing_cluster"></a> [existing\_cluster](#input\_existing\_cluster) | Indicate if the EKS cluster is already existing. | `bool` | `false` | no |
+| <a name="add_admin"></a> [add\_admin](#input\_add\_admin) | Indicate if we want to add administrator role. | `bool` | `false` | no |
 
 ## Outputs
 

@@ -8,3 +8,9 @@ variable "existing_cluster" {
   default     = false
   description = "Indicate if the EKS cluster is already existing."
 }
+
+variable "add_admin" {
+  type        = bool
+  default     = false
+  description = "Indicate if we want to add administrator role."
+}
