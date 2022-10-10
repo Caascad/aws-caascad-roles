@@ -116,6 +116,12 @@ in the `./terraform` directory with the following content:
 caascad_operator_trusted_arn = "<ARN>"
 ```
 
+If you need to add administrator role add the following variable in the `terraform.tfvars`:
+
+```tf
+add_admin = true
+```
+
 Where `<ARN>` is the AWS IAM ARN provided by the Caascad team.
 
 ### Planning terraform changes
